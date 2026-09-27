@@ -26,14 +26,12 @@
     
     body { margin: 0; background: var(--bg); color: var(--text); padding-top: env(safe-area-inset-top, 40px); overflow: hidden; }
 
-    /* App Layout */
     .app-container { display: flex; flex-direction: column; height: calc(100vh - env(safe-area-inset-top, 40px)); }
     .view { flex: 1; overflow-y: auto; padding: 20px; padding-bottom: 120px; display: none; }
     .view.active { display: block; animation: fadeIn 0.3s ease; }
     
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Bottom Navigation */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 env(safe-area-inset-bottom, 20px) 0; z-index: 1000;
@@ -42,7 +40,6 @@
     .nav-item.active { color: var(--accent); }
     .nav-icon { font-size: 24px; line-height: 1; margin-bottom: 2px; }
 
-    /* Floating Timer */
     .timer-bar {
       position: fixed; top: env(safe-area-inset-top, 10px); left: 20px; right: 20px; background: rgba(48, 209, 88, 0.15); border: 1px solid rgba(48, 209, 88, 0.3);
       border-radius: 20px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100;
@@ -52,12 +49,10 @@
     .timer-display { font-size: 26px; font-weight: 800; color: var(--success); font-variant-numeric: tabular-nums; }
     .btn-skip-timer { background: rgba(255,255,255,0.1); border: none; color: #fff; padding: 8px 16px; border-radius: 12px; font-weight: 600; cursor: pointer;}
 
-    /* Typography & Core Elements */
     h1 { font-size: 32px; font-weight: 800; margin: 0 0 24px 0; letter-spacing: -0.5px; }
     h2 { font-size: 22px; margin: 0 0 16px 0; font-weight: 700; }
     .card { background: var(--card-bg); border-radius: 24px; border: 1px solid var(--border); padding: 20px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
     
-    /* Workout Start Screen */
     .split-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
     .split-btn { 
       width: 100%; background: var(--bg-elevated); border: 1px solid var(--border); color: white; padding: 22px; 
@@ -67,25 +62,26 @@
     .split-btn:active { background: var(--card-bg); transform: scale(0.98); }
     .split-btn span { color: var(--accent); font-size: 14px; font-weight: 600; background: rgba(10, 132, 255, 0.1); padding: 4px 10px; border-radius: 10px; }
     
-    /* Active Workout View */
     .live-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .btn-back { background: rgba(255, 69, 58, 0.1); color: var(--danger); border: none; padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; }
     .progress-pill { background: var(--bg-elevated); border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
 
-    .exercise-image { width: 100%; height: 240px; border-radius: 24px; object-fit: cover; margin-bottom: 20px; background: #111; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .exercise-image-container {
+      width: 100%; height: 240px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; background: #fff; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .exercise-image { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
     
     .exercise-title { font-size: 26px; font-weight: 800; margin: 0 0 6px 0; line-height: 1.1; letter-spacing: -0.5px; }
     .exercise-meta { display: inline-block; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 8px; color: var(--text-muted); font-weight: 600; font-size: 14px; margin-bottom: 20px; border: 1px solid var(--border); }
     .exercise-meta span { color: var(--text); }
     
-    /* Action Buttons (Info, Alt, Skip) */
     .action-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 24px; }
     .btn-action { background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text); padding: 12px 0; border-radius: 14px; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: 0.2s; }
     .btn-action:active { transform: scale(0.95); background: var(--card-bg); }
     .btn-action.active-alt { background: rgba(10, 132, 255, 0.1); border-color: rgba(10, 132, 255, 0.3); color: var(--accent); }
     .action-icon { font-size: 18px; }
 
-    /* Inputs */
     .input-card { background: var(--bg-elevated); border-radius: 20px; padding: 20px; margin-bottom: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border: 1px solid var(--border); }
     .input-group { display: flex; flex-direction: column; gap: 8px; align-items: center; }
     .input-group label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -97,22 +93,20 @@
     
     .history-hint { text-align: center; font-size: 14px; color: var(--text-muted); margin-top: 16px; font-weight: 500; }
 
-    /* Progress Charts */
     .chart-container { margin-top: 16px; height: 140px; display: flex; align-items: flex-end; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
     .chart-bar-wrapper { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
     .chart-bar { width: 100%; background: var(--accent-gradient); border-radius: 6px 6px 0 0; min-height: 4px; transition: height 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
     .chart-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; font-weight: 500; }
     .chart-value { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
 
-    /* Catalog */
     .catalog-section { margin-bottom: 32px; }
     .catalog-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
     .catalog-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .catalog-item img { width: 80px; height: 60px; border-radius: 12px; object-fit: cover; border: 1px solid var(--border); }
+    .catalog-thumb-box { width: 80px; height: 60px; border-radius: 12px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--border); flex-shrink: 0; }
+    .catalog-item img { width: 100%; height: 100%; object-fit: contain; }
     .catalog-info h4 { margin: 0 0 6px 0; font-size: 17px; font-weight: 700; }
     .catalog-info p { margin: 0; font-size: 14px; color: var(--text-muted); font-weight: 500;}
 
-    /* Info Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; padding: 20px; }
     .modal.show { display: flex; opacity: 1; }
     .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; border-radius: 28px; border: 1px solid var(--border); overflow: hidden; transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
@@ -139,10 +133,8 @@
 
   <div class="app-container">
     
-    <!-- VIEW: WORKOUT (Start & Live) -->
+    <!-- VIEW: WORKOUT -->
     <main id="view-workout" class="view active">
-      
-      <!-- Start Screen -->
       <div id="workout-start">
         <h1>Neues Workout</h1>
         <div class="split-grid">
@@ -155,14 +147,15 @@
         </div>
       </div>
 
-      <!-- Live Workout Screen -->
       <div id="workout-live" style="display: none;">
         <div class="live-header">
           <button class="btn-back" onclick="cancelWorkout()">Beenden</button>
           <div class="progress-pill" id="live-progress">1/6 • Satz 1/4</div>
         </div>
         
-        <img id="live-img" class="exercise-image" src="" alt="Übungsbild">
+        <div class="exercise-image-container">
+          <img id="live-img" class="exercise-image" src="" alt="Übungsillustration" onerror="handleImgError(this)">
+        </div>
         
         <h3 class="exercise-title" id="live-title">Titel</h3>
         <div class="exercise-meta" id="live-meta">Ziel: <span>8-12 Wdh</span> • Pause: <span>180s</span></div>
@@ -201,14 +194,13 @@
       <div id="progress-content"></div>
     </main>
 
-    <!-- VIEW: ÜBUNGEN (Katalog) -->
+    <!-- VIEW: ÜBUNGEN -->
     <main id="view-catalog" class="view">
       <h1>Katalog</h1>
       <div id="catalog-content"></div>
     </main>
   </div>
 
-  <!-- Bottom Navigation -->
   <nav class="bottom-nav">
     <div class="nav-item active" onclick="switchTab('workout', this)">
       <span class="nav-icon">🏋️‍♂️</span>
@@ -224,7 +216,6 @@
     </div>
   </nav>
 
-  <!-- Info Modal -->
   <div id="info-modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -241,71 +232,69 @@
   </div>
 
   <script>
-    // Generiert ein schönes Platzhalter-Bild mit Text
-    function getImgUrl(name) {
-      return `https://placehold.co/800x600/1c1c1e/0a84ff?text=${encodeURIComponent(name.replace(" ", "\n"))}`;
+    function handleImgError(img) {
+      const name = document.getElementById('live-title').innerText || 'Gym Exercise';
+      img.src = `https://placehold.co/800x600/1c1c1e/0a84ff?text=${encodeURIComponent(name.replace(" ", "\n"))}`;
     }
 
-    // --- DATENBANK (Inklusive Alternativen) ---
+    // Datenbank mit kuratierten Open-Source-Grafiken
     const db = {
       push1: [
-        { name: "Barbell Bench Press", alt: "Flat Dumbbell Press", sets: 5, reps: "4-6", rest: 180, desc: "Schulterblätter fest zusammenziehen. Stange kontrolliert zur Brust ablassen und explosiv nach oben drücken.", benefit: "Baut massive Kraft und Volumen in der gesamten Brust auf." },
-        { name: "Standing Overhead Press", alt: "Seated DB Shoulder Press", sets: 4, reps: "6-8", rest: 180, desc: "Rumpf fest. Stange von der oberen Brust gerade über den Kopf drücken, ohne Schwung.", benefit: "Maximale Kraftentwicklung für die gesamten Schultern." },
-        { name: "Weighted Dips", alt: "Machine Chest Press", sets: 3, reps: "6-10", rest: 120, desc: "Oberkörper leicht nach vorne. Kontrolliert ablassen, bis 90° Winkel, dann hochdrücken.", benefit: "Baut enorm die untere Brust und den Trizeps auf." },
-        { name: "Incline DB Press (30°)", alt: "Incline Smith Machine", sets: 3, reps: "8-10", rest: 120, desc: "Bank auf 30°. Hanteln tief dehnen und oben zusammenführen.", benefit: "Fokussiert die obere Brust für den 3D-Look." },
-        { name: "Dumbbell Lateral Raise", alt: "Cable Lateral Raise", sets: 4, reps: "10-12", rest: 90, desc: "Arme leicht beugen. Hanteln seitlich anheben, bis Ellenbogen parallel zum Boden sind.", benefit: "Baut die seitliche Schulter auf (V-Taper)." },
-        { name: "Skull Crushers", alt: "Cable Triceps Pushdown", sets: 3, reps: "8-10", rest: 90, desc: "Liehend die SZ-Stange zur Stirn ablassen. Ellenbogen stabil lassen.", benefit: "Isoliert den Trizeps für dickere Arme." }
+        { name: "Barbell Bench Press", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Bench_Press_-_Medium_Grip/0.jpg", alt: "Flat Dumbbell Press", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bench_Press/0.jpg", sets: 5, reps: "4-6", rest: 180, desc: "Schulterblätter fest zusammenziehen. Stange kontrolliert zur Brust ablassen und explosiv nach oben drücken.", benefit: "Baut massive Kraft und Volumen in der gesamten Brust auf." },
+        { name: "Standing Overhead Press", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Military_Press/0.jpg", alt: "Seated DB Shoulder Press", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Dumbbell_Press/0.jpg", sets: 4, reps: "6-8", rest: 180, desc: "Rumpf fest. Stange von der oberen Brust gerade über den Kopf drücken, ohne Schwung.", benefit: "Maximale Kraftentwicklung für die gesamten Schultern." },
+        { name: "Weighted Dips", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dips_-_Chest_Version/0.jpg", alt: "Machine Chest Press", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leverage_Chest_Press/0.jpg", sets: 3, reps: "6-10", rest: 120, desc: "Oberkörper leicht nach vorne. Kontrolliert ablassen, bis 90° Winkel, dann hochdrücken.", benefit: "Baut enorm die untere Brust und den Trizeps auf." },
+        { name: "Incline DB Press (30°)", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg", alt: "Incline Smith Machine", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Smith_Machine_Incline_Bench_Press/0.jpg", sets: 3, reps: "8-10", rest: 120, desc: "Bank auf 30°. Hanteln tief dehnen und oben zusammenführen.", benefit: "Fokussiert die obere Brust für den 3D-Look." },
+        { name: "Dumbbell Lateral Raise", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg", alt: "Cable Lateral Raise", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_One_Arm_Lateral_Raise/0.jpg", sets: 4, reps: "10-12", rest: 90, desc: "Arme leicht beugen. Hanteln seitlich anheben, bis Ellenbogen parallel zum Boden sind.", benefit: "Baut die seitliche Schulter auf (V-Taper)." },
+        { name: "Skull Crushers", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Triceps_Press/0.jpg", alt: "Cable Triceps Pushdown", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Triceps_Pushdown/0.jpg", sets: 3, reps: "8-10", rest: 90, desc: "Liegend die SZ-Stange zur Stirn ablassen. Ellenbogen stabil lassen.", benefit: "Isoliert den Trizeps für dickere Arme." }
       ],
       pull1: [
-        { name: "Conventional Deadlift", alt: "Trap Bar Deadlift", sets: 4, reps: "4-6", rest: 240, desc: "Gerader Rücken. Stange eng am Bein nach oben ziehen (Hüfte nach vorne).", benefit: "Die beste Übung für Kraft in der Körperrückseite." },
-        { name: "Weighted Pull-Ups", alt: "Heavy Lat Pulldown", sets: 4, reps: "6-8", rest: 180, desc: "Aus dem vollen Hang die Brust zur Stange ziehen.", benefit: "Baut einen extrem breiten Latissimus auf." },
-        { name: "Barbell Row", alt: "T-Bar Row", sets: 4, reps: "6-8", rest: 180, desc: "Rücken gerade, vorbeugen. Stange kraftvoll zum Bauchnabel ziehen.", benefit: "Verdickt den gesamten Rücken enorm." },
-        { name: "Barbell Shrugs", alt: "Dumbbell Shrugs", sets: 3, reps: "8-10", rest: 120, desc: "Schultern gerade nach oben zu den Ohren ziehen und halten.", benefit: "Baut den Nacken (Trapezmuskel) auf." },
-        { name: "Standing Barbell Curl", alt: "Heavy DB Curls", sets: 3, reps: "8-10", rest: 120, desc: "Ellenbogen fixieren. Ohne Schwung beugen.", benefit: "Die Grundübung für massiven Bizeps." },
-        { name: "Seated Hammer Curls", alt: "Rope Hammer Curls", sets: 3, reps: "8-10", rest: 90, desc: "Hanteln im neutralen Griff greifen und beugen.", benefit: "Trainiert Bizeps und Armbeuger." }
+        { name: "Conventional Deadlift", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Deadlift/0.jpg", alt: "Trap Bar Deadlift", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Trap_Bar_Deadlift/0.jpg", sets: 4, reps: "4-6", rest: 240, desc: "Gerader Rücken. Stange eng am Bein nach oben ziehen (Hüfte nach vorne).", benefit: "Die beste Übung für Kraft in der Körperrückseite." },
+        { name: "Weighted Pull-Ups", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg", alt: "Heavy Lat Pulldown", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Lat_Pulldown/0.jpg", sets: 4, reps: "6-8", rest: 180, desc: "Aus dem vollen Hang die Brust zur Stange ziehen.", benefit: "Baut einen extrem breiten Latissimus auf." },
+        { name: "Barbell Row", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Bent_Over_Barbell_Row/0.jpg", alt: "T-Bar Row", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/T-Bar_Row/0.jpg", sets: 4, reps: "6-8", rest: 180, desc: "Rücken gerade, vorbeugen. Stange kraftvoll zum Bauchnabel ziehen.", benefit: "Verdickt den gesamten Rücken enorm." },
+        { name: "Barbell Shrugs", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Shrug/0.jpg", alt: "Dumbbell Shrugs", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Shrug/0.jpg", sets: 3, reps: "8-10", rest: 120, desc: "Schultern gerade nach oben zu den Ohren ziehen und halten.", benefit: "Baut den Nacken (Trapezmuskel) auf." },
+        { name: "Standing Barbell Curl", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Curl/0.jpg", alt: "Heavy DB Curls", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Bicep_Curl/0.jpg", sets: 3, reps: "8-10", rest: 120, desc: "Ellenbogen fixieren. Ohne Schwung beugen.", benefit: "Die Grundübung für massiven Bizeps." },
+        { name: "Seated Hammer Curls", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hammer_Curls/0.jpg", alt: "Rope Hammer Curls", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Hammer_Curls_-_Rope_Attachment/0.jpg", sets: 3, reps: "8-10", rest: 90, desc: "Hanteln im neutralen Griff greifen und beugen.", benefit: "Trainiert Bizeps und Armbeuger." }
       ],
       legs1: [
-        { name: "Barbell Back Squat", alt: "Hack Squat Machine", sets: 5, reps: "4-6", rest: 240, desc: "Hüfte nach hinten/unten, Knie nach außen. Rücken gerade.", benefit: "Königsübung für massive Oberschenkel." },
-        { name: "Romanian Deadlift", alt: "Stiff-Legged Deadlift", sets: 3, reps: "8-10", rest: 180, desc: "Hüfte nach hinten schieben, bis ein tiefer Stretch im Beinbizeps entsteht.", benefit: "Baut Beinrückseite und Po auf." },
-        { name: "Walking Lunges", alt: "Bulgarian Split Squats", sets: 3, reps: "10-12", rest: 120, desc: "Große Ausfallschritte. Hinteres Knie fast zum Boden.", benefit: "Oberschenkel und Stabilität." },
-        { name: "Lying Leg Curl", alt: "Seated Leg Curl", sets: 3, reps: "10-12", rest: 90, desc: "Gewicht explosiv zum Po ziehen, langsam ablassen.", benefit: "Isoliert die Oberschenkelrückseite." },
-        { name: "Standing Calf Raises", alt: "Leg Press Calf Raises", sets: 4, reps: "10-12", rest: 90, desc: "Auf die Zehenspitzen drücken, oben halten, tief ablassen.", benefit: "Baut die Waden auf." },
-        { name: "Hanging Leg Raises", alt: "Cable Crunches", sets: 3, reps: "10-15", rest: 90, desc: "Beine ohne Schwung kontrolliert heben.", benefit: "Effektiv für den Waschbrettbauch." }
+        { name: "Barbell Back Squat", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Full_Squat/0.jpg", alt: "Hack Squat Machine", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hack_Squat/0.jpg", sets: 5, reps: "4-6", rest: 240, desc: "Hüfte nach hinten/unten, Knie nach außen. Rücken gerade.", benefit: "Königsübung für massive Oberschenkel." },
+        { name: "Romanian Deadlift", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Romanian_Deadlift/0.jpg", alt: "Stiff-Legged Deadlift", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Stiff-Legged_Barbell_Deadlift/0.jpg", sets: 3, reps: "8-10", rest: 180, desc: "Hüfte nach hinten schieben, bis ein tiefer Stretch im Beinbizeps entsteht.", benefit: "Baut Beinrückseite und Po auf." },
+        { name: "Walking Lunges", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Lunges/0.jpg", alt: "Bulgarian Split Squats", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Split_Squats/0.jpg", sets: 3, reps: "10-12", rest: 120, desc: "Große Ausfallschritte. Hinteres Knie fast zum Boden.", benefit: "Oberschenkel und Stabilität." },
+        { name: "Lying Leg Curl", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/0.jpg", alt: "Seated Leg Curl", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/0.jpg", sets: 3, reps: "10-12", rest: 90, desc: "Gewicht explosiv zum Po ziehen, langsam ablassen.", benefit: "Isoliert die Oberschenkelrückseite." },
+        { name: "Standing Calf Raises", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Calf_Raises/0.jpg", alt: "Leg Press Calf Raises", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Press_On_The_Leg_Press_Machine/0.jpg", sets: 4, reps: "10-12", rest: 90, desc: "Auf die Zehenspitzen drücken, oben halten, tief ablassen.", benefit: "Baut die Waden auf." },
+        { name: "Hanging Leg Raises", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Hanging_Leg_Raise/0.jpg", alt: "Cable Crunches", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crunch/0.jpg", sets: 3, reps: "10-15", rest: 90, desc: "Beine ohne Schwung kontrolliert heben.", benefit: "Effektiv für den Waschbrettbauch." }
       ],
       push2: [
-        { name: "Incline DB Press (30°)", alt: "Incline Barbell Press", sets: 4, reps: "10-12", rest: 120, desc: "Bank auf 30°. Hanteln tief ablassen (Stretch).", benefit: "Bester Winkel für die obere Brust." },
-        { name: "Flat Machine Chest Press", alt: "Flat Dumbbell Flyes", sets: 4, reps: "10-12", rest: 120, desc: "Kontrolliert und ohne Schwung drücken.", benefit: "Sicherer Muskelaufbau bis zum Versagen." },
-        { name: "Seated DB Shoulder Press", alt: "Arnold Press", sets: 3, reps: "10-12", rest: 120, desc: "Hanteln über den Kopf drücken. Ellenbogen leicht vorne.", benefit: "Volumen für vordere und seitliche Schulter." },
-        { name: "Cable Lateral Raise", alt: "Seated DB Lateral Raise", sets: 4, reps: "12-15", rest: 90, desc: "Kabel hinterm Körper greifen. Arm seitlich heben.", benefit: "Konstante Spannung für die seitliche Schulter." },
-        { name: "Low-to-High Cable Flyes", alt: "Pec Deck Machine", sets: 3, reps: "12-15", rest: 90, desc: "Kabel von unten nach oben vor der Brust zusammenführen.", benefit: "Isoliert die obere Brust." },
-        { name: "Overhead Cable Tri Ext.", alt: "Overhead DB Extension", sets: 4, reps: "12-15", rest: 90, desc: "Kabel über dem Kopf drücken. Ellenbogen eng.", benefit: "Dehnt den langen Trizepskopf." }
+        { name: "Incline DB Press (30°)", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Press/0.jpg", alt: "Incline Barbell Press", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Barbell_Incline_Bench_Press_-_Medium_Grip/0.jpg", sets: 4, reps: "10-12", rest: 120, desc: "Bank auf 30°. Hanteln tief ablassen (Stretch).", benefit: "Bester Winkel für die obere Brust." },
+        { name: "Flat Machine Chest Press", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leverage_Chest_Press/0.jpg", alt: "Flat Dumbbell Flyes", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Dumbbell_Flyes/0.jpg", sets: 4, reps: "10-12", rest: 120, desc: "Kontrolliert und ohne Schwung drücken.", benefit: "Sicherer Muskelaufbau bis zum Versagen." },
+        { name: "Seated DB Shoulder Press", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Dumbbell_Press/0.jpg", alt: "Arnold Press", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Arnold_Dumbbell_Press/0.jpg", sets: 3, reps: "10-12", rest: 120, desc: "Hanteln über den Kopf drücken. Ellenbogen leicht vorne.", benefit: "Volumen für vordere und seitliche Schulter." },
+        { name: "Cable Lateral Raise", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_One_Arm_Lateral_Raise/0.jpg", alt: "Seated DB Lateral Raise", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Side_Lateral_Raise/0.jpg", sets: 4, reps: "12-15", rest: 90, desc: "Kabel hinterm Körper greifen. Arm seitlich heben.", benefit: "Konstante Spannung für die seitliche Schulter." },
+        { name: "Low-to-High Cable Flyes", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Crossover/0.jpg", alt: "Pec Deck Machine", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Butterfly/0.jpg", sets: 3, reps: "12-15", rest: 90, desc: "Kabel von unten nach oben vor der Brust zusammenführen.", benefit: "Isoliert die obere Brust." },
+        { name: "Overhead Cable Tri Ext.", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Rope_Overhead_Triceps_Extension/0.jpg", alt: "Overhead DB Extension", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Standing_Dumbbell_Triceps_Extension/0.jpg", sets: 4, reps: "12-15", rest: 90, desc: "Kabel über dem Kopf drücken. Ellenbogen eng.", benefit: "Dehnt den langen Trizepskopf." }
       ],
       pull2: [
-        { name: "Wide-Grip Lat Pulldown", alt: "Pull-ups", sets: 4, reps: "10-12", rest: 120, desc: "Breiter Griff. Zur oberen Brust ziehen.", benefit: "Macht den Rücken breit." },
-        { name: "Seated Cable Row", alt: "Chest-Supported Row", sets: 4, reps: "10-12", rest: 120, desc: "Griff tief zum Bauchnabel ziehen, Brust raus.", benefit: "Baut die 3D-Dicke des Rückens auf." },
-        { name: "Single-Arm DB Row", alt: "Single-Arm Cable Row", sets: 3, reps: "10-12", rest: 90, desc: "Hantel eng am Körper zur Hüfte ziehen.", benefit: "Beseitigt Dysbalancen." },
-        { name: "Face Pulls", alt: "Reverse Flyes", sets: 4, reps: "15-20", rest: 90, desc: "Hände zum Gesicht ziehen, Hände außen rotieren.", benefit: "Wichtig für Haltung und hintere Schulter." },
-        { name: "EZ-Bar Preacher Curl", alt: "Incline DB Curls", sets: 4, reps: "10-12", rest: 90, desc: "Oberarm fest ablegen, Stange beugen.", benefit: "Isoliert den Bizeps für pure Hypertrophie." },
-        { name: "Single-Arm Cable Curl", alt: "Concentration Curls", sets: 3, reps: "12-15", rest: 90, desc: "Am Kabelzug mit einem Arm curlen.", benefit: "Konstanter Widerstand für den Pump." }
+        { name: "Wide-Grip Lat Pulldown", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Wide-Grip_Lat_Pulldown/0.jpg", alt: "Pull-ups", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Pullups/0.jpg", sets: 4, reps: "10-12", rest: 120, desc: "Breiter Griff. Zur oberen Brust ziehen.", benefit: "Macht den Rücken breit." },
+        { name: "Seated Cable Row", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Cable_Rows/0.jpg", alt: "Chest-Supported Row", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/T-Bar_Row/0.jpg", sets: 4, reps: "10-12", rest: 120, desc: "Griff tief zum Bauchnabel ziehen, Brust raus.", benefit: "Baut die 3D-Dicke des Rückens auf." },
+        { name: "Single-Arm DB Row", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/One-Arm_Dumbbell_Row/0.jpg", alt: "Single-Arm Cable Row", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_One-arm_Cable_Row/0.jpg", sets: 3, reps: "10-12", rest: 90, desc: "Hantel eng am Körper zur Hüfte ziehen.", benefit: "Beseitigt Dysbalancen." },
+        { name: "Face Pulls", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Face_Pull/0.jpg", alt: "Reverse Flyes", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Reverse_Flyes/0.jpg", sets: 4, reps: "15-20", rest: 90, desc: "Hände zum Gesicht ziehen, Hände außen rotieren.", benefit: "Wichtig für Haltung und hintere Schulter." },
+        { name: "EZ-Bar Preacher Curl", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Preacher_Curl/0.jpg", alt: "Incline DB Curls", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Incline_Dumbbell_Curl/0.jpg", sets: 4, reps: "10-12", rest: 90, desc: "Oberarm fest ablegen, Stange beugen.", benefit: "Isoliert den Bizeps für pure Hypertrophie." },
+        { name: "Single-Arm Cable Curl", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Cable_Preacher_Curl/0.jpg", alt: "Concentration Curls", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Concentration_Curls/0.jpg", sets: 3, reps: "12-15", rest: 90, desc: "Am Kabelzug mit einem Arm curlen.", benefit: "Konstanter Widerstand für den Pump." }
       ],
       legs2: [
-        { name: "Leg Press", alt: "Goblet Squats", sets: 4, reps: "12-15", rest: 120, desc: "Gewicht tief ablassen, Po bleibt auf dem Sitz.", benefit: "Aufbau der Beine ohne Rückenbelastung." },
-        { name: "Leg Extension Machine", alt: "Sissy Squats", sets: 4, reps: "12-15", rest: 90, desc: "Beine durchstrecken, oben extrem hart anspannen.", benefit: "Isoliert den vorderen Oberschenkel." },
-        { name: "Seated Leg Curl", alt: "Lying Leg Curl", sets: 4, reps: "12-15", rest: 90, desc: "Gewicht kraftvoll nach unten/hinten drücken.", benefit: "Trainiert die Beinrückseite." },
-        { name: "Hip Abduction Machine", alt: "Lateral Band Walks", sets: 3, reps: "15-20", rest: 60, desc: "Beine so weit wie möglich nach außen drücken.", benefit: "Seitliche Gesäßmuskulatur." },
-        { name: "Seated Calf Raise", alt: "Leg Press Calf Raises", sets: 4, reps: "15-20", rest: 60, desc: "Über die Zehenspitzen heben, tief dehnen.", benefit: "Baut den Wadenmuskel (Soleus) auf." },
-        { name: "Planks", alt: "Decline Sit-ups", sets: 3, reps: "60s", rest: 60, desc: "Körper bildet gerade Linie. Bauch/Po anspannen.", benefit: "Baut Kernstabilität (Core) auf." }
+        { name: "Leg Press", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Press/0.jpg", alt: "Goblet Squats", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Goblet_Squat/0.jpg", sets: 4, reps: "12-15", rest: 120, desc: "Gewicht tief ablassen, Po bleibt auf dem Sitz.", benefit: "Aufbau der Beine ohne Rückenbelastung." },
+        { name: "Leg Extension Machine", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Leg_Extensions/0.jpg", alt: "Sissy Squats", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Sissy_Squat/0.jpg", sets: 4, reps: "12-15", rest: 90, desc: "Beine durchstrecken, oben extrem hart anspannen.", benefit: "Isoliert den vorderen Oberschenkel." },
+        { name: "Seated Leg Curl", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Leg_Curl/0.jpg", alt: "Lying Leg Curl", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lying_Leg_Curls/0.jpg", sets: 4, reps: "12-15", rest: 90, desc: "Gewicht kraftvoll nach unten/hinten drücken.", benefit: "Trainiert die Beinrückseite." },
+        { name: "Hip Abduction Machine", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Thigh_Abductor/0.jpg", alt: "Lateral Band Walks", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Lateral_Band_Walk/0.jpg", sets: 3, reps: "15-20", rest: 60, desc: "Beine so weit wie möglich nach außen drücken.", benefit: "Seitliche Gesäßmuskulatur." },
+        { name: "Seated Calf Raise", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Seated_Calf_Raise/0.jpg", alt: "Leg Press Calf Raises", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Calf_Press_On_The_Leg_Press_Machine/0.jpg", sets: 4, reps: "15-20", rest: 60, desc: "Über die Zehenspitzen heben, tief dehnen.", benefit: "Baut den Wadenmuskel (Soleus) auf." },
+        { name: "Planks", img: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Plank/0.jpg", alt: "Decline Sit-ups", altImg: "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/Decline_Crunch/0.jpg", sets: 3, reps: "60s", rest: 60, desc: "Körper bildet gerade Linie. Bauch/Po anspannen.", benefit: "Baut Kernstabilität (Core) auf." }
       ]
     };
 
-    // --- STATE & HISTORY ---
     let history = JSON.parse(localStorage.getItem('gymHistory')) || [];
     let currentSession = null;
     let timerInterval = null;
     let audioCtx = null;
-    let isAltActive = false; // Speichert, ob gerade die Alternative angezeigt wird
+    let isAltActive = false;
 
-    // --- NAVIGATION ---
     function switchTab(tabId, element) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
       document.getElementById('view-' + tabId).classList.add('active');
@@ -316,7 +305,6 @@
       if (tabId === 'catalog') renderCatalog();
     }
 
-    // --- MODAL LOGIC ---
     function showInfoModal() {
       if (!currentSession) return;
       const ex = currentSession.exercises[currentSession.currentExIdx];
@@ -332,7 +320,6 @@
       document.getElementById('info-modal').classList.remove('show');
     }
 
-    // --- WORKOUT LOGIC ---
     function startWorkout(split) {
       currentSession = {
         date: new Date().toISOString().split('T')[0],
@@ -378,10 +365,9 @@
     }
 
     function skipExercise() {
-      const ex = currentSession.exercises[currentSession.currentExIdx];
       currentSession.currentExIdx++;
       currentSession.currentSet = 1;
-      isAltActive = false; // Reset Alt Toggle
+      isAltActive = false;
       document.getElementById('btn-alt').classList.remove('active-alt');
       document.getElementById('btn-alt').innerHTML = `<span class="action-icon">🔄</span> Alternative`;
 
@@ -395,11 +381,12 @@
     function updateLiveUI() {
       const ex = currentSession.exercises[currentSession.currentExIdx];
       const displayName = isAltActive ? ex.alt : ex.name;
+      const displayImg = isAltActive ? (ex.altImg || ex.img) : ex.img;
       
       document.getElementById('live-progress').innerText = `${currentSession.currentExIdx + 1}/${currentSession.exercises.length} • Satz ${currentSession.currentSet}/${ex.sets}`;
       document.getElementById('live-title').innerText = displayName;
       document.getElementById('live-meta').innerHTML = `Ziel: <span>${ex.reps} Wdh</span> • Pause: <span>${ex.rest}s</span>`;
-      document.getElementById('live-img').src = getImgUrl(displayName);
+      document.getElementById('live-img').src = displayImg;
 
       let lastWeight = "";
       let lastReps = "";
@@ -436,7 +423,6 @@
         startTimer(ex.rest);
         updateLiveUI();
       } else {
-        // Exercise finished
         currentSession.currentExIdx++;
         currentSession.currentSet = 1;
         isAltActive = false;
@@ -469,7 +455,6 @@
       document.querySelectorAll('.nav-item')[1].click(); 
     }
 
-    // --- TIMER LOGIC ---
     function startTimer(seconds) {
       clearInterval(timerInterval);
       const bar = document.getElementById('timerBar');
@@ -516,7 +501,6 @@
       localStorage.setItem('gymHistory', JSON.stringify(history));
     }
 
-    // --- RENDER FORTSCHRITT ---
     function renderProgress() {
       const container = document.getElementById('progress-content');
       container.innerHTML = '';
@@ -562,7 +546,6 @@
       }
     }
 
-    // --- RENDER KATALOG ---
     function renderCatalog() {
       const container = document.getElementById('catalog-content');
       container.innerHTML = '';
@@ -580,6 +563,9 @@
         db[split].forEach(ex => {
           html += `
             <div class="catalog-item">
+              <div class="catalog-thumb-box">
+                <img src="${ex.img}" alt="${ex.name}" loading="lazy" onerror="this.src='https://placehold.co/100x80/1c1c1e/0a84ff?text=Gym'">
+              </div>
               <div class="catalog-info">
                 <h4>${ex.name}</h4>
                 <p>${ex.sets} Sätze • ${ex.reps} Wdh • ${ex.rest}s Pause</p>
