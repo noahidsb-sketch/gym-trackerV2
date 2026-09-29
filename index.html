@@ -43,8 +43,8 @@
     .tab-icon { font-size: 18px; line-height: 1; margin-bottom: 4px; }
     .tab-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2px; }
 
-    /* Timer & Stopwatch */
-    .timer-bar { position: fixed; top: env(safe-area-inset-top, 10px); left: 20px; right: 20px; background: rgba(48, 209, 88, 0.15); border: 1px solid rgba(48, 209, 88, 0.3); border-radius: 20px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100; transform: translateY(-200%); transition: transform 0.5s cubic-bezier(0.1, 1.5, 0.2, 1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    /* Timer (Jetzt unten positioniert) */
+    .timer-bar { position: fixed; bottom: 100px; left: 20px; right: 20px; background: rgba(48, 209, 88, 0.15); border: 1px solid rgba(48, 209, 88, 0.3); border-radius: 20px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; z-index: 100; transform: translateY(200%); transition: transform 0.5s cubic-bezier(0.1, 1.5, 0.2, 1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
     .timer-bar.visible { transform: translateY(0); }
     .timer-display { font-size: 26px; font-weight: 800; color: var(--success); font-variant-numeric: tabular-nums; }
     .btn-skip-timer { background: rgba(255,255,255,0.1); border: none; color: #fff; padding: 8px 16px; border-radius: 12px; font-weight: 600; cursor: pointer; }
@@ -64,8 +64,7 @@
     .btn-menu { background: var(--bg-elevated); border: 1px solid var(--border); color: white; padding: 8px 16px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
     .exercise-image-container { width: 100%; height: 240px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; background: #111113; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
-    .exercise-image { width: 100%; height: 100%; object-fit: cover; }
-    .gif-badge { position: absolute; top: 12px; right: 12px; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); color: white; font-size: 10px; font-weight: 800; padding: 4px 8px; border-radius: 8px; letter-spacing: 1px; }
+    .exercise-image { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
 
     .exercise-title { font-size: 26px; font-weight: 800; margin: 0 0 6px 0; line-height: 1.1; letter-spacing: -0.5px; }
     .exercise-meta { display: inline-block; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 8px; color: var(--text-muted); font-weight: 600; font-size: 14px; margin-bottom: 20px; border: 1px solid var(--border); }
@@ -112,7 +111,7 @@
     .rank-titan { border-color: #ff375f; background: linear-gradient(145deg, rgba(255,55,95,0.15), #151516); }
     .rank-titan .rank-title { color: #ff375f; }
 
-    /* Modals (Info & Exercise List) */
+    /* Modals */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; padding: 20px; }
     .modal.show { display: flex; opacity: 1; }
     .modal-content { background: var(--card-bg); width: 100%; max-width: 400px; border-radius: 28px; border: 1px solid var(--border); overflow: hidden; transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-height: 80vh; display: flex; flex-direction: column; }
@@ -130,7 +129,6 @@
     .ex-list-item.active .ex-name { color: var(--accent); font-weight: 800; }
     .ex-list-item.done .ex-name { color: var(--success); text-decoration: line-through; opacity: 0.7; }
 
-    /* Success Checkmark Animation */
     .success-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; transition: opacity 0.2s; }
     .success-overlay.show { opacity: 1; }
     .success-icon { font-size: 100px; background: rgba(48, 209, 88, 0.2); backdrop-filter: blur(10px); width: 160px; height: 160px; border-radius: 80px; display: flex; align-items: center; justify-content: center; transform: scale(0.5); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -139,7 +137,7 @@
 </head>
 <body>
 
-  <!-- Floating Timer -->
+  <!-- Floating Timer (Jetzt unten) -->
   <div class="timer-bar" id="timerBar">
     <div>
       <div style="font-size: 12px; color: rgba(0,0,0,0.6); text-transform: uppercase; font-weight: 700;">Pause läuft</div>
@@ -177,8 +175,7 @@
         </div>
         
         <div class="exercise-image-container">
-          <div class="gif-badge">GIF</div>
-          <img id="live-img" class="exercise-image" src="" alt="Übungsillustration" onerror="handleImgError(this)">
+          <img id="live-img" class="exercise-image" src="" alt="Übungsbild">
         </div>
         
         <h3 class="exercise-title" id="live-title">Titel</h3>
@@ -237,7 +234,7 @@
       <div class="sliding-pill" id="slidingPill"></div>
       
       <div class="tab-btn active" onclick="switchTab('workout', 0)">
-        <span class="tab-icon">🏋️️‍♂️</span>
+        <span class="tab-icon">🏋‍♂️</span>
         <span class="tab-label">Workout</span>
       </div>
       <div class="tab-btn" onclick="switchTab('progress', 1)">
@@ -302,13 +299,11 @@
     }, {passive: true});
 
     function handleSwipe() {
-      const threshold = 80; // mindest Wisch-Distanz
+      const threshold = 80; 
       if (touchendX < touchstartX - threshold) {
-        // Wisch nach links -> Nächster Tab
         if (currentTabIndex < tabs.length - 1) switchTab(tabs[currentTabIndex + 1], currentTabIndex + 1);
       }
       if (touchendX > touchstartX + threshold) {
-        // Wisch nach rechts -> Vorheriger Tab
         if (currentTabIndex > 0) switchTab(tabs[currentTabIndex - 1], currentTabIndex - 1);
       }
     }
@@ -330,77 +325,66 @@
       if (tabId === 'catalog') renderCatalog();
     }
 
-    // GIF Platzhalter oder echte Links (Wikimedia/Wger Format für Animationen)
-    function getGifUrl(name) {
-      // Da echte GIFs oft tote Links haben, simulieren wir das hier extrem clean als Platzhalter.
-      // Wenn du eine echte GIF URL hast, kannst du sie in der DB unter 'img' eintragen.
-      return `https://placehold.co/800x600/151516/0a84ff.png?text=${encodeURIComponent(name.replace(" ", "\n"))}\n(Animation)`;
-    }
-    function handleImgError(img) {
-      const name = document.getElementById('live-title').innerText || 'Gym Exercise';
-      img.src = `https://placehold.co/800x600/151516/0a84ff.png?text=${encodeURIComponent(name.replace(" ", "\n"))}`;
-    }
+    // --- DATENBANK (Mit hochwertigen Unsplash-Bildern) ---
+    const img1 = "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=60";
+    const img2 = "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=60";
+    const img3 = "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&q=60";
+    const img4 = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=60";
+    const img5 = "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=60";
+    const img6 = "https://images.unsplash.com/photo-1530822847156-5df684f0ee13?w=600&q=60";
 
     const db = {
       push1: [
-        { name: "Barbell Bench Press", img: getGifUrl("Bench Press"), alt: "Flat Dumbbell Press", altImg: getGifUrl("DB Bench Press"), sets: 5, reps: "4-6", rest: 180, desc: "Schulterblätter fest zusammenziehen. Stange kontrolliert zur Brust ablassen und explosiv nach oben drücken.", benefit: "Massive Brustkraft." },
-        { name: "Standing Overhead Press", img: getGifUrl("Overhead Press"), alt: "Seated DB Shoulder Press", altImg: getGifUrl("DB Shoulder Press"), sets: 4, reps: "6-8", rest: 180, desc: "Rumpf fest. Stange von der Brust gerade über den Kopf drücken, ohne Schwung.", benefit: "Maximale Schulterkraft." },
-        { name: "Weighted Dips", img: getGifUrl("Dips"), alt: "Machine Chest Press", altImg: getGifUrl("Chest Press"), sets: 3, reps: "6-10", rest: 120, desc: "Oberkörper leicht nach vorne. Kontrolliert ablassen, bis 90° Winkel, hochdrücken.", benefit: "Untere Brust & Trizeps." },
-        { name: "Incline DB Press (30°)", img: getGifUrl("Incline DB Press"), alt: "Incline Smith Machine", altImg: getGifUrl("Smith Incline"), sets: 3, reps: "8-10", rest: 120, desc: "Bank auf 30°. Hanteln tief dehnen und oben zusammenführen.", benefit: "Obere Brust für 3D-Look." },
-        { name: "Dumbbell Lateral Raise", img: getGifUrl("Lateral Raise"), alt: "Cable Lateral Raise", altImg: getGifUrl("Cable Raise"), sets: 4, reps: "10-12", rest: 90, desc: "Arme leicht beugen. Hanteln seitlich anheben.", benefit: "Seitliche Schulter (V-Taper)." },
-        { name: "Skull Crushers", img: getGifUrl("Skull Crushers"), alt: "Cable Triceps Pushdown", altImg: getGifUrl("Tricep Pushdown"), sets: 3, reps: "8-10", rest: 90, desc: "Liegend die SZ-Stange zur Stirn ablassen.", benefit: "Dicker Trizeps." }
+        { name: "Barbell Bench Press", img: img1, alt: "Flat Dumbbell Press", altImg: img2, sets: 5, reps: "4-6", rest: 180, desc: "Schulterblätter fest zusammenziehen. Stange kontrolliert zur Brust ablassen und explosiv nach oben drücken.", benefit: "Massive Brustkraft." },
+        { name: "Standing Overhead Press", img: img3, alt: "Seated DB Shoulder Press", altImg: img4, sets: 4, reps: "6-8", rest: 180, desc: "Rumpf fest. Stange von der Brust gerade über den Kopf drücken, ohne Schwung.", benefit: "Maximale Schulterkraft." },
+        { name: "Weighted Dips", img: img5, alt: "Machine Chest Press", altImg: img6, sets: 3, reps: "6-10", rest: 120, desc: "Oberkörper leicht nach vorne. Kontrolliert ablassen, bis 90° Winkel, hochdrücken.", benefit: "Untere Brust & Trizeps." },
+        { name: "Incline DB Press (30°)", img: img2, alt: "Incline Smith Machine", altImg: img1, sets: 3, reps: "8-10", rest: 120, desc: "Bank auf 30°. Hanteln tief dehnen und oben zusammenführen.", benefit: "Obere Brust für 3D-Look." },
+        { name: "Dumbbell Lateral Raise", img: img4, alt: "Cable Lateral Raise", altImg: img3, sets: 4, reps: "10-12", rest: 90, desc: "Arme leicht beugen. Hanteln seitlich anheben.", benefit: "Seitliche Schulter (V-Taper)." },
+        { name: "Skull Crushers", img: img6, alt: "Cable Triceps Pushdown", altImg: img5, sets: 3, reps: "8-10", rest: 90, desc: "Liegend die SZ-Stange zur Stirn ablassen.", benefit: "Dicker Trizeps." }
       ],
       pull1: [
-        { name: "Conventional Deadlift", img: getGifUrl("Deadlift"), alt: "Trap Bar Deadlift", altImg: getGifUrl("Trap Bar DL"), sets: 4, reps: "4-6", rest: 240, desc: "Gerader Rücken. Stange eng am Bein nach oben ziehen.", benefit: "Ganzkörperkraft." },
-        { name: "Weighted Pull-Ups", img: getGifUrl("Pull-Ups"), alt: "Heavy Lat Pulldown", altImg: getGifUrl("Lat Pulldown"), sets: 4, reps: "6-8", rest: 180, desc: "Aus dem vollen Hang die Brust zur Stange ziehen.", benefit: "Extrem breiter Latissimus." },
-        { name: "Barbell Row", img: getGifUrl("Barbell Row"), alt: "T-Bar Row", altImg: getGifUrl("T-Bar Row"), sets: 4, reps: "6-8", rest: 180, desc: "Rücken gerade, vorbeugen. Stange kraftvoll zum Bauchnabel ziehen.", benefit: "Verdickt den gesamten Rücken." },
-        { name: "Barbell Shrugs", img: getGifUrl("Shrugs"), alt: "Dumbbell Shrugs", altImg: getGifUrl("DB Shrugs"), sets: 3, reps: "8-10", rest: 120, desc: "Schultern gerade nach oben zu den Ohren ziehen und halten.", benefit: "Baut den Nacken auf." },
-        { name: "Standing Barbell Curl", img: getGifUrl("Barbell Curl"), alt: "Heavy DB Curls", altImg: getGifUrl("DB Curls"), sets: 3, reps: "8-10", rest: 120, desc: "Ellenbogen fixieren. Ohne Schwung beugen.", benefit: "Massiver Bizeps." },
-        { name: "Seated Hammer Curls", img: getGifUrl("Hammer Curls"), alt: "Rope Hammer Curls", altImg: getGifUrl("Cable Hammer Curls"), sets: 3, reps: "8-10", rest: 90, desc: "Hanteln im neutralen Griff greifen und beugen.", benefit: "Bizeps und Armbeuger." }
+        { name: "Conventional Deadlift", img: img1, alt: "Trap Bar Deadlift", altImg: img2, sets: 4, reps: "4-6", rest: 240, desc: "Gerader Rücken. Stange eng am Bein nach oben ziehen.", benefit: "Ganzkörperkraft." },
+        { name: "Weighted Pull-Ups", img: img5, alt: "Heavy Lat Pulldown", altImg: img6, sets: 4, reps: "6-8", rest: 180, desc: "Aus dem vollen Hang die Brust zur Stange ziehen.", benefit: "Extrem breiter Latissimus." },
+        { name: "Barbell Row", img: img4, alt: "T-Bar Row", altImg: img3, sets: 4, reps: "6-8", rest: 180, desc: "Rücken gerade, vorbeugen. Stange kraftvoll zum Bauchnabel ziehen.", benefit: "Verdickt den gesamten Rücken." },
+        { name: "Barbell Shrugs", img: img3, alt: "Dumbbell Shrugs", altImg: img4, sets: 3, reps: "8-10", rest: 120, desc: "Schultern gerade nach oben zu den Ohren ziehen und halten.", benefit: "Baut den Nacken auf." },
+        { name: "Standing Barbell Curl", img: img2, alt: "Heavy DB Curls", altImg: img1, sets: 3, reps: "8-10", rest: 120, desc: "Ellenbogen fixieren. Ohne Schwung beugen.", benefit: "Massiver Bizeps." },
+        { name: "Seated Hammer Curls", img: img6, alt: "Rope Hammer Curls", altImg: img5, sets: 3, reps: "8-10", rest: 90, desc: "Hanteln im neutralen Griff greifen und beugen.", benefit: "Bizeps und Armbeuger." }
       ],
       legs1: [
-        { name: "Barbell Back Squat", img: getGifUrl("Squat"), alt: "Hack Squat", altImg: getGifUrl("Hack Squat"), sets: 5, reps: "4-6", rest: 240, desc: "Hüfte nach hinten/unten, Knie nach außen. Rücken gerade.", benefit: "Königsübung für Oberschenkel." },
-        { name: "Romanian Deadlift", img: getGifUrl("RDL"), alt: "Stiff-Legged DL", altImg: getGifUrl("Stiff DL"), sets: 3, reps: "8-10", rest: 180, desc: "Hüfte nach hinten schieben, bis ein tiefer Stretch entsteht.", benefit: "Beinrückseite und Po." },
-        { name: "Walking Lunges", img: getGifUrl("Lunges"), alt: "Bulgarian Split Squats", altImg: getGifUrl("Split Squats"), sets: 3, reps: "10-12", rest: 120, desc: "Große Ausfallschritte. Hinteres Knie fast zum Boden.", benefit: "Oberschenkel und Stabilität." },
-        { name: "Lying Leg Curl", img: getGifUrl("Leg Curl"), alt: "Seated Leg Curl", altImg: getGifUrl("Seated Curl"), sets: 3, reps: "10-12", rest: 90, desc: "Gewicht explosiv zum Po ziehen, langsam ablassen.", benefit: "Oberschenkelrückseite." },
-        { name: "Standing Calf Raises", img: getGifUrl("Calf Raises"), alt: "Leg Press Calf Raises", altImg: getGifUrl("Leg Press Calf"), sets: 4, reps: "10-12", rest: 90, desc: "Auf die Zehenspitzen drücken, oben halten, tief ablassen.", benefit: "Waden." },
-        { name: "Hanging Leg Raises", img: getGifUrl("Leg Raises"), alt: "Cable Crunches", altImg: getGifUrl("Crunches"), sets: 3, reps: "10-15", rest: 90, desc: "Beine ohne Schwung kontrolliert heben.", benefit: "Waschbrettbauch." }
+        { name: "Barbell Back Squat", img: img1, alt: "Hack Squat", altImg: img2, sets: 5, reps: "4-6", rest: 240, desc: "Hüfte nach hinten/unten, Knie nach außen. Rücken gerade.", benefit: "Königsübung für Oberschenkel." },
+        { name: "Romanian Deadlift", img: img4, alt: "Stiff-Legged DL", altImg: img3, sets: 3, reps: "8-10", rest: 180, desc: "Hüfte nach hinten schieben, bis ein tiefer Stretch entsteht.", benefit: "Beinrückseite und Po." },
+        { name: "Walking Lunges", img: img3, alt: "Bulgarian Split Squats", altImg: img4, sets: 3, reps: "10-12", rest: 120, desc: "Große Ausfallschritte. Hinteres Knie fast zum Boden.", benefit: "Oberschenkel und Stabilität." },
+        { name: "Lying Leg Curl", img: img6, alt: "Seated Leg Curl", altImg: img5, sets: 3, reps: "10-12", rest: 90, desc: "Gewicht explosiv zum Po ziehen, langsam ablassen.", benefit: "Oberschenkelrückseite." },
+        { name: "Standing Calf Raises", img: img5, alt: "Leg Press Calf Raises", altImg: img6, sets: 4, reps: "10-12", rest: 90, desc: "Auf die Zehenspitzen drücken, oben halten, tief ablassen.", benefit: "Waden." },
+        { name: "Hanging Leg Raises", img: img2, alt: "Cable Crunches", altImg: img1, sets: 3, reps: "10-15", rest: 90, desc: "Beine ohne Schwung kontrolliert heben.", benefit: "Waschbrettbauch." }
       ],
       push2: [
-        { name: "Incline DB Press (30°)", img: getGifUrl("Incline DB Press"), alt: "Incline Barbell Press", altImg: getGifUrl("Incline Bench"), sets: 4, reps: "10-12", rest: 120, desc: "Bank auf 30°. Hanteln tief ablassen (Stretch).", benefit: "Obere Brust." },
-        { name: "Flat Machine Chest Press", img: getGifUrl("Machine Press"), alt: "Flat Dumbbell Flyes", altImg: getGifUrl("DB Flyes"), sets: 4, reps: "10-12", rest: 120, desc: "Kontrolliert und ohne Schwung drücken.", benefit: "Sicherer Muskelaufbau." },
-        { name: "Seated DB Shoulder Press", img: getGifUrl("DB Shoulder Press"), alt: "Arnold Press", altImg: getGifUrl("Arnold Press"), sets: 3, reps: "10-12", rest: 120, desc: "Hanteln über den Kopf drücken.", benefit: "Vordere und seitliche Schulter." },
-        { name: "Cable Lateral Raise", img: getGifUrl("Cable Raise"), alt: "Seated DB Lateral Raise", altImg: getGifUrl("Seated Raise"), sets: 4, reps: "12-15", rest: 90, desc: "Kabel hinterm Körper greifen. Arm seitlich heben.", benefit: "Seitliche Schulter." },
-        { name: "Low-to-High Cable Flyes", img: getGifUrl("Cable Flyes"), alt: "Pec Deck Machine", altImg: getGifUrl("Pec Deck"), sets: 3, reps: "12-15", rest: 90, desc: "Kabel von unten nach oben vor der Brust zusammenführen.", benefit: "Obere Brust." },
-        { name: "Overhead Cable Tri Ext.", img: getGifUrl("Cable Tricep Ext"), alt: "Overhead DB Extension", altImg: getGifUrl("DB Tricep Ext"), sets: 4, reps: "12-15", rest: 90, desc: "Kabel über dem Kopf drücken.", benefit: "Dehnt den langen Trizepskopf." }
+        { name: "Incline DB Press (30°)", img: img2, alt: "Incline Barbell Press", altImg: img1, sets: 4, reps: "10-12", rest: 120, desc: "Bank auf 30°. Hanteln tief ablassen (Stretch).", benefit: "Obere Brust." },
+        { name: "Flat Machine Chest Press", img: img1, alt: "Flat Dumbbell Flyes", altImg: img2, sets: 4, reps: "10-12", rest: 120, desc: "Kontrolliert und ohne Schwung drücken.", benefit: "Sicherer Muskelaufbau." },
+        { name: "Seated DB Shoulder Press", img: img3, alt: "Arnold Press", altImg: img4, sets: 3, reps: "10-12", rest: 120, desc: "Hanteln über den Kopf drücken.", benefit: "Vordere und seitliche Schulter." },
+        { name: "Cable Lateral Raise", img: img4, alt: "Seated DB Lateral Raise", altImg: img3, sets: 4, reps: "12-15", rest: 90, desc: "Kabel hinterm Körper greifen. Arm seitlich heben.", benefit: "Seitliche Schulter." },
+        { name: "Low-to-High Cable Flyes", img: img5, alt: "Pec Deck Machine", altImg: img6, sets: 3, reps: "12-15", rest: 90, desc: "Kabel von unten nach oben vor der Brust zusammenführen.", benefit: "Obere Brust." },
+        { name: "Overhead Cable Tri Ext.", img: img6, alt: "Overhead DB Extension", altImg: img5, sets: 4, reps: "12-15", rest: 90, desc: "Kabel über dem Kopf drücken. Ellenbogen eng.", benefit: "Dehnt den langen Trizepskopf." }
       ],
       pull2: [
-        { name: "Wide-Grip Lat Pulldown", img: getGifUrl("Lat Pulldown"), alt: "Pull-ups", altImg: getGifUrl("Pull-ups"), sets: 4, reps: "10-12", rest: 120, desc: "Breiter Griff. Zur oberen Brust ziehen.", benefit: "Rückenbreite." },
-        { name: "Seated Cable Row", img: getGifUrl("Cable Row"), alt: "Chest-Supported Row", altImg: getGifUrl("Machine Row"), sets: 4, reps: "10-12", rest: 120, desc: "Griff tief zum Bauchnabel ziehen, Brust raus.", benefit: "Rückendicke." },
-        { name: "Single-Arm DB Row", img: getGifUrl("DB Row"), alt: "Single-Arm Cable Row", altImg: getGifUrl("Cable Row"), sets: 3, reps: "10-12", rest: 90, desc: "Hantel eng am Körper zur Hüfte ziehen.", benefit: "Beseitigt Dysbalancen." },
-        { name: "Face Pulls", img: getGifUrl("Face Pulls"), alt: "Reverse Flyes", altImg: getGifUrl("Reverse Flyes"), sets: 4, reps: "15-20", rest: 90, desc: "Hände zum Gesicht ziehen.", benefit: "Haltung und hintere Schulter." },
-        { name: "EZ-Bar Preacher Curl", img: getGifUrl("Preacher Curl"), alt: "Incline DB Curls", altImg: getGifUrl("Incline Curls"), sets: 4, reps: "10-12", rest: 90, desc: "Oberarm fest ablegen, Stange beugen.", benefit: "Bizeps Hypertrophie." },
-        { name: "Single-Arm Cable Curl", img: getGifUrl("Cable Curl"), alt: "Concentration Curls", altImg: getGifUrl("Concentration Curl"), sets: 3, reps: "12-15", rest: 90, desc: "Am Kabelzug mit einem Arm curlen.", benefit: "Bizeps Pump." }
+        { name: "Wide-Grip Lat Pulldown", img: img2, alt: "Pull-ups", altImg: img1, sets: 4, reps: "10-12", rest: 120, desc: "Breiter Griff. Zur oberen Brust ziehen.", benefit: "Rückenbreite." },
+        { name: "Seated Cable Row", img: img4, alt: "Chest-Supported Row", altImg: img3, sets: 4, reps: "10-12", rest: 120, desc: "Griff tief zum Bauchnabel ziehen, Brust raus.", benefit: "Rückendicke." },
+        { name: "Single-Arm DB Row", img: img3, alt: "Single-Arm Cable Row", altImg: img4, sets: 3, reps: "10-12", rest: 90, desc: "Hantel eng am Körper zur Hüfte ziehen.", benefit: "Beseitigt Dysbalancen." },
+        { name: "Face Pulls", img: img5, alt: "Reverse Flyes", altImg: img6, sets: 4, reps: "15-20", rest: 90, desc: "Hände zum Gesicht ziehen.", benefit: "Haltung und hintere Schulter." },
+        { name: "EZ-Bar Preacher Curl", img: img1, alt: "Incline DB Curls", altImg: img2, sets: 4, reps: "10-12", rest: 90, desc: "Oberarm fest ablegen, Stange beugen.", benefit: "Bizeps Hypertrophie." },
+        { name: "Single-Arm Cable Curl", img: img6, alt: "Concentration Curls", altImg: img5, sets: 3, reps: "12-15", rest: 90, desc: "Am Kabelzug mit einem Arm curlen.", benefit: "Bizeps Pump." }
       ],
       legs2: [
-        { name: "Leg Press", img: getGifUrl("Leg Press"), alt: "Goblet Squats", altImg: getGifUrl("Goblet Squat"), sets: 4, reps: "12-15", rest: 120, desc: "Gewicht tief ablassen, Po bleibt auf dem Sitz.", benefit: "Aufbau der Beine." },
-        { name: "Leg Extension Machine", img: getGifUrl("Leg Extension"), alt: "Sissy Squats", altImg: getGifUrl("Sissy Squat"), sets: 4, reps: "12-15", rest: 90, desc: "Beine durchstrecken, oben extrem hart anspannen.", benefit: "Vorderer Oberschenkel." },
-        { name: "Seated Leg Curl", img: getGifUrl("Seated Leg Curl"), alt: "Lying Leg Curl", altImg: getGifUrl("Lying Curl"), sets: 4, reps: "12-15", rest: 90, desc: "Gewicht kraftvoll nach unten/hinten drücken.", benefit: "Beinrückseite." },
-        { name: "Hip Abduction Machine", img: getGifUrl("Abduction"), alt: "Lateral Band Walks", altImg: getGifUrl("Band Walks"), sets: 3, reps: "15-20", rest: 60, desc: "Beine so weit wie möglich nach außen drücken.", benefit: "Seitliche Gesäßmuskulatur." },
-        { name: "Seated Calf Raise", img: getGifUrl("Seated Calf Raise"), alt: "Leg Press Calf Raises", altImg: getGifUrl("Calf Press"), sets: 4, reps: "15-20", rest: 60, desc: "Über die Zehenspitzen heben, tief dehnen.", benefit: "Wadenmuskel (Soleus)." },
-        { name: "Planks", img: getGifUrl("Plank"), alt: "Decline Sit-ups", altImg: getGifUrl("Sit-ups"), sets: 3, reps: "60s", rest: 60, desc: "Körper bildet gerade Linie. Bauch/Po anspannen.", benefit: "Kernstabilität (Core)." }
+        { name: "Leg Press", img: img1, alt: "Goblet Squats", altImg: img2, sets: 4, reps: "12-15", rest: 120, desc: "Gewicht tief ablassen, Po bleibt auf dem Sitz.", benefit: "Aufbau der Beine." },
+        { name: "Leg Extension Machine", img: img2, alt: "Sissy Squats", altImg: img1, sets: 4, reps: "12-15", rest: 90, desc: "Beine durchstrecken, oben extrem hart anspannen.", benefit: "Vorderer Oberschenkel." },
+        { name: "Seated Leg Curl", img: img6, alt: "Lying Leg Curl", altImg: img5, sets: 4, reps: "12-15", rest: 90, desc: "Gewicht kraftvoll nach unten/hinten drücken.", benefit: "Beinrückseite." },
+        { name: "Hip Abduction Machine", img: img4, alt: "Lateral Band Walks", altImg: img3, sets: 3, reps: "15-20", rest: 60, desc: "Beine so weit wie möglich nach außen drücken.", benefit: "Seitliche Gesäßmuskulatur." },
+        { name: "Seated Calf Raise", img: img5, alt: "Leg Press Calf Raises", altImg: img6, sets: 4, reps: "15-20", rest: 60, desc: "Über die Zehenspitzen heben, tief dehnen.", benefit: "Wadenmuskel (Soleus)." },
+        { name: "Planks", img: img3, alt: "Decline Sit-ups", altImg: img4, sets: 3, reps: "60s", rest: 60, desc: "Körper bildet gerade Linie. Bauch/Po anspannen.", benefit: "Kernstabilität (Core)." }
       ]
     };
 
     let history = JSON.parse(localStorage.getItem('gymHistory')) || [];
-    if (history.length === 0) {
-      history = [
-        { id: Date.now()-100000, date: "2026-09-10", workout: "push1", data: { "Barbell Bench Press": [{w: 75, r: 8}], "Standing Overhead Press": [{w: 40, r: 8}] } },
-        { id: Date.now()-50000, date: "2026-09-17", workout: "push1", data: { "Barbell Bench Press": [{w: 80, r: 8}], "Standing Overhead Press": [{w: 42.5, r: 8}] } }
-      ];
-      saveHistory();
-    }
-
     let currentSession = null;
     let timerInterval = null;
     let timerTargetTime = null;
@@ -537,7 +521,6 @@
       document.getElementById('live-meta').innerHTML = `Ziel: <span>${ex.reps} Wdh</span> • Pause: <span>${ex.rest}s</span>`;
       document.getElementById('live-img').src = displayImg;
 
-      // Smartes Gewicht: Nimm das von heute aus Satz 1, falls existent, sonst Historie
       let lastWeight = "";
       let lastReps = "";
       let hintText = "Erstes Mal! Hau rein.";
@@ -582,12 +565,11 @@
     function editSet(exName, idx) {
       const set = currentSession.data[exName][idx];
       let newW = prompt(`Gewicht für Satz ${idx+1} ändern:`, set.w);
-      if(newW === null) return; // cancel
+      if(newW === null) return;
       let newR = prompt(`Wiederholungen für Satz ${idx+1} ändern:`, set.r);
       if(newR === null) return;
 
       if(newW === "" && newR === "") {
-        // Delete set
         currentSession.data[exName].splice(idx, 1);
       } else {
         currentSession.data[exName][idx] = { w: parseFloat(newW), r: parseInt(newR) };
@@ -606,7 +588,6 @@
 
       if (navigator.vibrate) navigator.vibrate(40);
       
-      // Success Animation
       const overlay = document.getElementById('successOverlay');
       overlay.classList.add('show');
       setTimeout(() => overlay.classList.remove('show'), 600);
@@ -614,7 +595,6 @@
       startTimer(ex.rest);
       
       if (currentSession.data[displayName].length >= ex.sets) {
-        // Exercise finished
         currentSession.currentExIdx++;
         currentSession.currentSet = 1;
         isAltActive = false;
@@ -657,7 +637,7 @@
       const btn = document.getElementById('btn-complete');
       
       bar.classList.add('visible');
-      btn.disabled = true; // Sperre Button
+      btn.disabled = true;
       btn.innerText = "Warte auf Pause...";
       
       timerTargetTime = Date.now() + (seconds * 1000);
@@ -702,7 +682,7 @@
         }
       }
       if (!document.hidden && workoutStartTime) {
-         updateStopwatch(); // resync stopwatch immediately
+         updateStopwatch();
       }
     });
 
@@ -725,7 +705,6 @@
         return;
       }
 
-      // History List (reverse chronological)
       [...history].reverse().forEach(session => {
         let exCount = Object.keys(session.data).length;
         container.innerHTML += `
@@ -741,12 +720,8 @@
     }
 
     // --- TITAN RANKING SYSTEM ---
-    // 1RM Brzycki Formula: W * (36 / (37 - R))
-    function calc1RM(weight, reps) {
-      return weight * (36 / (37 - reps));
-    }
+    function calc1RM(weight, reps) { return weight * (36 / (37 - reps)); }
 
-    // Standards für 74kg (Männlich)
     const standards = {
       "Barbell Bench Press": { iron: 40, bronze: 60, silver: 75, gold: 90, platin: 110, titan: 130 },
       "Barbell Back Squat": { iron: 50, bronze: 75, silver: 100, gold: 120, platin: 145, titan: 170 },
@@ -800,7 +775,6 @@
       }
     }
 
-    // --- KATALOG ---
     function renderCatalog() {
       const container = document.getElementById('catalog-content');
       container.innerHTML = '';
