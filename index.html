@@ -74,9 +74,8 @@
     .stopwatch { font-size: 15px; font-weight: 700; color: var(--accent); background: rgba(10, 132, 255, 0.1); padding: 6px 12px; border-radius: 12px; font-variant-numeric: tabular-nums; }
     .btn-menu { background: var(--bg-elevated); border: 1px solid var(--border); color: white; padding: 8px 16px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
 
-    .exercise-image-container { width: 100%; height: 240px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; background: #fff; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
-    .exercise-image { width: 100%; height: 100%; object-fit: contain; padding: 8px; } /* Wger Bilder sind hell, daher contain & padding */
-
+   .exercise-image-container { width: 100%; height: 240px; border-radius: 24px; overflow: hidden; margin-bottom: 20px; background: #111113; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
+    .exercise-image { width: 100%; height: 100%; object-fit: contain; padding: 12px; filter: invert(1) hue-rotate(180deg); opacity: 0.9; transition: opacity 0.3s ease; }
     .exercise-title { font-size: 26px; font-weight: 800; margin: 0 0 6px 0; line-height: 1.1; letter-spacing: -0.5px; }
     .exercise-meta { display: inline-block; background: rgba(255,255,255,0.05); padding: 6px 12px; border-radius: 8px; color: var(--text-muted); font-weight: 600; font-size: 14px; margin-bottom: 20px; border: 1px solid var(--border); }
     .exercise-meta span { color: var(--text); }
