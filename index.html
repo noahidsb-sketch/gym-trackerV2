@@ -41,7 +41,7 @@
     .glass-nav-wrapper { position: fixed; bottom: max(env(safe-area-inset-bottom, 16px), 16px); left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; pointer-events: none; }
     .liquid-tab-bar { position: relative; display: flex; align-items: center; background: var(--glass-bg); backdrop-filter: blur(35px) saturate(210%); -webkit-backdrop-filter: blur(35px) saturate(210%); border: 1px solid var(--glass-border); padding: 6px; border-radius: 36px; box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.2); pointer-events: auto; width: calc(100% - 40px); max-width: 380px; }
     .sliding-pill { position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc((100% - 12px) / 4); background: var(--glass-pill); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3); transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.25, 1); z-index: 1; pointer-events: none; }
-    .tab-btn { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0; color: var(--text-muted); cursor: pointer; z-index: 2; transition: color 0.25s ease, transform 0.15s ease; }
+    .sliding-pill.dragging { transition: transform 0.1s ease-out; background: rgba(255, 255, 255, 0.3); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.5); } .tab-btn { position: relative; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 0; color: var(--text-muted); cursor: pointer; z-index: 2; transition: color 0.25s ease, transform 0.15s ease; }
     .tab-btn:active { transform: scale(0.94); }
     .tab-btn.active { color: #ffffff; }
     .tab-icon { font-size: 18px; line-height: 1; margin-bottom: 4px; }
@@ -872,6 +872,70 @@
     // Init App
     renderWorkoutStart();
     renderCatalog();
+    // --- LIVE FINGER TRACKING FÜR DIE TAB BAR ---
+    const tabBar = document.querySelector('.liquid-tab-bar');
+    const pill = document.getElementById('slidingPill');
+    let isDraggingTab = false;
+    let startX = 0;
+    let initialPillX = 0;
+    let pillWidth = 0;
+
+    tabBar.addEventListener('touchstart', (e) => {
+      isDraggingTab = true;
+      pill.classList.add('dragging');
+      pillWidth = pill.offsetWidth;
+      
+      // Berechne die aktuelle exakte Position
+      const transformValue = window.getComputedStyle(pill).getPropertyValue('transform');
+      let currentX = 0;
+      if (transformValue !== 'none') {
+        const matrix = new DOMMatrix(transformValue);
+        currentX = matrix.m41;
+      }
+      initialPillX = currentX;
+      startX = e.touches[0].clientX;
+      
+      // Pille vergrößern (scale 1.15), sobald sie angefasst wird
+      pill.style.transform = `translateX(${currentX}px) scale(1.15)`;
+    }, { passive: true });
+
+    tabBar.addEventListener('touchmove', (e) => {
+      if (!isDraggingTab) return;
+      e.preventDefault(); // Stoppt das Scrollen der Seite beim Wischen
+      
+      let deltaX = e.touches[0].clientX - startX;
+      let newX = initialPillX + deltaX;
+      
+      // Begrenzungen (damit du die Pille nicht aus dem Bildschirm wischst)
+      const maxTravel = tabBar.offsetWidth - pillWidth - 12; // 12px Padding
+      if (newX < 0) newX = 0;
+      if (newX > maxTravel) newX = maxTravel;
+      
+      // Pille folgt live dem Finger und bleibt vergrößert
+      pill.style.transform = `translateX(${newX}px) scale(1.15)`;
+    }, { passive: false });
+
+    tabBar.addEventListener('touchend', (e) => {
+      if (!isDraggingTab) return;
+      isDraggingTab = false;
+      pill.classList.remove('dragging');
+      
+      // Schauen, über welchem Tab der Finger beim Loslassen war
+      const touch = e.changedTouches[0];
+      const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      let targetIndex = currentTabIndex;
+      if (elem) {
+        const tabBtn = elem.closest('.tab-btn');
+        if (tabBtn) {
+          const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+          targetIndex = tabBtns.indexOf(tabBtn);
+        }
+      }
+      
+      // Wechselt den Tab und setzt das Scale automatisch wieder auf normal
+      switchTab(tabs[targetIndex], targetIndex);
+    }, { passive: true });
   </script>
 </body>
 </html>
