@@ -317,7 +317,25 @@
         if (currentTabIndex > 0) switchTab(tabs[currentTabIndex - 1], currentTabIndex - 1);
       }
     }
-
+// --- SLIDE AUF DER TAB BAR (LIVE FINGER TRACKING) ---
+    const tabBar = document.querySelector('.liquid-tab-bar');
+    tabBar.addEventListener('touchmove', e => {
+      e.preventDefault(); // Verhindert, dass Safari beim Sliden die Seite scrollt
+      const touch = e.touches[0];
+      const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+      
+      if (elem) {
+        const tabBtn = elem.closest('.tab-btn');
+        if (tabBtn) {
+          const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+          const idx = tabBtns.indexOf(tabBtn);
+          // Sobald der Finger über einem neuen Tab ist, wechsle sofort dorthin
+          if (idx !== -1 && idx !== currentTabIndex) {
+            switchTab(tabs[idx], idx);
+          }
+        }
+      }
+    }, { passive: false });
     function switchTab(tabId, index) {
       currentTabIndex = index;
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
