@@ -902,20 +902,21 @@
       isDraggingTab = false;
       pill.classList.remove('dragging');
       
-      // Schauen, über welchem Tab der Finger beim Loslassen war
-      const touch = e.changedTouches[0];
-      const elem = document.elementFromPoint(touch.clientX, touch.clientY);
-      
-      let targetIndex = currentTabIndex;
-      if (elem) {
-        const tabBtn = elem.closest('.tab-btn');
-        if (tabBtn) {
-          const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
-          targetIndex = tabBtns.indexOf(tabBtn);
-        }
+      // Lese aus, wohin die Pille geschoben wurde
+      const transformValue = window.getComputedStyle(pill).getPropertyValue('transform');
+      let finalX = 0;
+      if (transformValue !== 'none') {
+        const matrix = new DOMMatrix(transformValue);
+        finalX = matrix.m41;
       }
       
-      // Wechselt den Tab und setzt das Scale automatisch wieder auf normal
+      // Berechne mathematisch den nächsten Tab (4 Tabs = 3 Zonen)
+      const maxTravel = tabBar.offsetWidth - pillWidth - 12;
+      let targetIndex = Math.round(finalX / (maxTravel / 3));
+      
+      if (targetIndex < 0) targetIndex = 0;
+      if (targetIndex > 3) targetIndex = 3;
+      
       switchTab(tabs[targetIndex], targetIndex);
     }, { passive: true });
   </script>
